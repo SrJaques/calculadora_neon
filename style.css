@@ -1,0 +1,244 @@
+/* ============================================
+   TOKENS — ajuste as cores aqui, tudo no resto
+   usa essas variáveis
+============================================ */
+:root {
+    --bg: #07030f;
+    --surface: #130a24;
+    --surface-alt: #1c1033;
+    --primary: #b026ff;   /* violeta — título, resultado */
+    --secondary: #00e5ff; /* ciano — foco, botão, detalhes */
+    --text: #e6e1f5;
+    --text-dim: #8b7fa8;
+    --danger: #ff2f6e;    /* reservado p/ mensagens de erro */
+    --radius: 8px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 20%, #190a33 0%, var(--bg) 65%);
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--text);
+}
+
+/* Camada de scanlines — atmosfera de tela de terminal antigo */
+.scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.025) 0px,
+        rgba(255, 255, 255, 0.025) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    z-index: 10;
+}
+
+/* ============================================
+   PAINEL — elemento de assinatura do design
+============================================ */
+.calc-panel {
+    position: relative;
+    width: min(380px, 90vw);
+    padding: 40px 32px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow:
+        0 0 0 1px rgba(176, 38, 255, 0.4),
+        0 0 24px rgba(176, 38, 255, 0.35),
+        0 0 60px rgba(0, 229, 255, 0.08);
+    animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* Cantos estilo HUD/mira — o detalhe que torna o painel "menos card generico" */
+.calc-panel::before,
+.calc-panel::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--secondary);
+    opacity: 0.85;
+}
+.calc-panel::before {
+    top: -2px;
+    left: -2px;
+    border-right: none;
+    border-bottom: none;
+}
+.calc-panel::after {
+    bottom: -2px;
+    right: -2px;
+    border-left: none;
+    border-top: none;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow:
+            0 0 0 1px rgba(176, 38, 255, 0.4),
+            0 0 24px rgba(176, 38, 255, 0.35),
+            0 0 60px rgba(0, 229, 255, 0.08);
+    }
+    50% {
+        box-shadow:
+            0 0 0 1px rgba(0, 229, 255, 0.5),
+            0 0 32px rgba(176, 38, 255, 0.5),
+            0 0 80px rgba(0, 229, 255, 0.15);
+    }
+}
+
+/* ============================================
+   TÍTULO
+============================================ */
+.calc-title {
+    margin: 0 0 32px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: 0.12em;
+    text-align: center;
+    color: var(--text);
+    text-shadow:
+        0 0 8px var(--primary),
+        0 0 18px rgba(176, 38, 255, 0.6);
+}
+
+.calc-title-accent {
+    color: var(--secondary);
+    text-shadow: 0 0 8px var(--secondary);
+}
+
+/* ============================================
+   DISPLAY (inputs + select)
+============================================ */
+.calc-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.calc-input,
+.calc-select {
+    flex: 1;
+    min-width: 0;
+    background: var(--surface-alt);
+    border: 1px solid rgba(176, 38, 255, 0.35);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.95rem;
+    padding: 10px 8px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.calc-input::placeholder {
+    color: var(--text-dim);
+}
+
+.calc-select {
+    flex: 0 0 58px;
+    cursor: pointer;
+    appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--secondary) 50%),
+        linear-gradient(135deg, var(--secondary) 50%, transparent 50%);
+    background-position: calc(100% - 16px) center, calc(100% - 11px) center;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 24px;
+}
+
+.calc-input:focus,
+.calc-select:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.25), 0 0 12px rgba(0, 229, 255, 0.4);
+}
+
+/* Remove o spinner numérico padrão para visual mais limpo */
+.calc-input::-webkit-outer-spin-button,
+.calc-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.calc-input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* ============================================
+   BOTÃO
+============================================ */
+.calc-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid var(--secondary);
+    border-radius: 4px;
+    color: var(--secondary);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+.calc-button:hover {
+    background: rgba(0, 229, 255, 0.08);
+    box-shadow: 0 0 16px rgba(0, 229, 255, 0.5);
+}
+
+.calc-button:active {
+    transform: scale(0.97);
+}
+
+.calc-button:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 3px;
+}
+
+/* ============================================
+   RESULTADO
+============================================ */
+.calc-result {
+    margin: 24px 0 0;
+    min-height: 1.4em;
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(176, 38, 255, 0.6);
+    word-break: break-word;
+}
+
+/* Acessibilidade: respeita quem desativou animações no sistema */
+@media (prefers-reduced-motion: reduce) {
+    .calc-panel {
+        animation: none;
+    }
+}
+
+/* Responsivo — telas bem estreitas empilham o select abaixo dos inputs */
+@media (max-width: 360px) {
+    .calc-display {
+        flex-wrap: wrap;
+    }
+    .calc-select {
+        flex: 1 0 100%;
+        order: 3;
+    }
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <main class="calc-panel">
+        <h1 class="calc-title">CALC<span class="calc-title-accent">//</span>X</h1>
+
+        <div class="calc-display">
+            <input type="number" id="num1" class="calc-input" placeholder="Número 1">
+            <select id="operacao" class="calc-select">
+                <option value="+">+</option>
+                <option value="-">−</option>
+                <option value="*">×</option>
+                <option value="/">÷</option>
+                <option value="^">^</option>
+                <option value="%">%</option>
+            </select>
+            <input type="number" id="num2" class="calc-input" placeholder="Número 2">
+        </div>
+
+        <button id="btnCalcular" class="calc-button">CALCULAR</button>
+
+        <p id="resultado" class="calc-result"></p>
+    </main>
+
+    <script src="AtividadeIA.js"></script>
+</body>
+</html>
